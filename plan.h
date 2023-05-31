@@ -16,7 +16,6 @@ public:
 
     void loadFromFile( std::string path );
     void saveToFile( std::string path );
-    void printKcalHistory();
 
 private:
     Day days[ 7 ];

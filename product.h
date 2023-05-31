@@ -17,9 +17,13 @@ namespace productData
     };
 };
 
-struct CaloriesHistory
+class CaloriesHistory
 {
+public:
     int fortnite[ 14 ];
+
+    void addKcalToday( int amount );
+    void print();
 };
 
 class Product

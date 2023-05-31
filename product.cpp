@@ -1,5 +1,25 @@
 #include "product.h"
 
+void CaloriesHistory::addKcalToday( int amount )
+{
+    fortnite[ 0 ] += amount;
+}
+
+void CaloriesHistory::print()
+{
+    std::cout << "\tSuma kalorii dla ostatnich 14 dni:\n\n";
+
+    std::cout << "\tDzisiaj: " << plan::kcalHistory.fortnite[ 0 ] << " kcal\n\n";
+
+    std::cout << "\tPoprzednie dni:\n";
+    for( int day = 1; day < 14; ++day )
+    {
+        std::cout << "\t         " << plan::kcalHistory.fortnite[ day ] << " kcal\n";
+    }
+}
+
+
+
 Product::Product( std::string name, amount_with_unit AwU, int kcal, Date( date ), int price, bool fav ) :
     _name( name ), _amountWithUnit( AwU ), _kcal( kcal ), _expiryDate( date ), _price( price ), _isFavorite( fav ) {};
 

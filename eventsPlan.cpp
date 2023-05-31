@@ -106,7 +106,7 @@ void events_planEdit()
 void events_planHistory()
 {
     refreshScreen();
-    plan::week.printKcalHistory();
+    plan::kcalHistory.print();
 
     std::cout << "\n\tESC. Powrot";
     while( char userInput = _getch() )

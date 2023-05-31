@@ -45,7 +45,7 @@ void events_productConsume()
 
     try {
         // nazwa
-        std::string name = getlineToString( "Podaj nazwe produktu " );
+        std::string name = getlineToString( "Podaj nazwe produktu: " );
 
         if( name == "" )
         {
@@ -87,7 +87,7 @@ void events_productConsume()
         pushNotif( "Odliczono" + convertAmountWithUnitToString( amountWithUnitToMacroUnit( AwU ) ) + " produktu" );
 
         // dolicz kalorie do historii
-        plan::kcalHistory.fortnite[ 0 ] += ( *product )->getKcal() * AwU.first / 100;
+        plan::kcalHistory.addKcalToday( ( *product )->getKcal() * AwU.first / 100 );
     }
 
     catch( const std::exception& ex )

@@ -263,7 +263,7 @@ bool Recipe::canBeCooked( float servings )
         }
         pushNotif( "Przygotowales " + std::to_string( servings ).substr( 0, 4 ) + "x " + _name + "! Odliczono produkty" );
 
-        plan::kcalHistory.fortnite[ 0 ] += totalKcal;
+        plan::kcalHistory.addKcalToday( totalKcal );
         pushNotif( "Suma kalorii: " + std::to_string( totalKcal ) + " kcal" );
     }
 

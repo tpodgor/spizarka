@@ -50,20 +50,6 @@ void Plan::editPlanForDay( int day )
 
 
 
-void Plan::printKcalHistory()
-{
-    std::cout << "\tSuma kalorii dla ostatnich 14 dni:\n\n";
-
-    std::cout << "\tWczesniej: " << plan::kcalHistory.fortnite[ 0 ] << " kcal\n\n";
-
-    for( int day = 1; day < 14; ++day )
-    {
-    std::cout << "\t         " << plan::kcalHistory.fortnite[ day ] << " kcal\n";
-    }
-}
-
-
-
 void Plan::loadFromFile( std::string path )
 {
     // zaladuj plik

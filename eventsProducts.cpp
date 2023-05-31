@@ -82,12 +82,9 @@ void events_productConsume()
             }
         }
 
-        // odlicz
+        // odlicz ilosc produktu
         ( *product )->consumeAmount( AwU.first );
-        pushNotif( "Odliczono" + convertAmountWithUnitToString( amountWithUnitToMacroUnit( AwU ) ) + " produktu" );
-
-        // dolicz kalorie do historii
-        plan::kcalHistory.addKcalToday( ( *product )->getKcal() * AwU.first / 100 );
+        pushNotif( "Odliczono" + convertAmountWithUnitToString( amountWithUnitToMacroUnit( AwU ) ) + " produktu" );     
     }
 
     catch( const std::exception& ex )
@@ -212,20 +209,20 @@ void events_productEdit()
     refreshScreen();
     product::base.printProducts( print::NAME | print::AMOUNT | print::DATE | print::KCAL | print::PRICE | print::IS_FAVORITE | print::HIDDEN );
 
-    try {
-        std::string name = cinToString( "Podaj nazwe produktu: " );
+    std::string name = cinToString( "Podaj nazwe produktu: " );
 
-        auto product = findMemberByName<Product*>( product::base.products, name );
+    auto product = findMemberByName<Product*>( product::base.products, name );
 
-        if( product == product::base.products.end() )
-        {
-            throw std::runtime_error( "Nie ma takiego produktu na liscie" );
-        }
+    if( product == product::base.products.end() )
+    {
+        pushNotif( "Nie ma takiego produktu na liscie" );
+    }
 
-        while( 1 )
-        {
+    while( product != product::base.products.end() )
+    {
+        try {
             refreshScreen();
-            (*product)->printInfo( print::NAME | print::AMOUNT | print::KCAL | print::DATE | print::PRICE | print::IS_FAVORITE | print::HIDDEN );
+            ( *product )->printInfo( print::NAME | print::AMOUNT | print::KCAL | print::DATE | print::PRICE | print::IS_FAVORITE | print::HIDDEN );
             drawProductsEditMenu();
 
             char userInput = _getch();
@@ -233,7 +230,7 @@ void events_productEdit()
             {
                 case productData::NAME:
                 {
-                    std::string newName = getlineToString( "\nPodaj nowa nazwe produktu : " );
+                    std::string newName = getlineToString( "\nPodaj nowa nazwe produktu: " );
 
                     if( newName == "" )
                     {
@@ -331,15 +328,16 @@ void events_productEdit()
                 }
                 case 27:
                 {
-                    throw std::runtime_error("");
+                    AppState::currentState = AppState::PRODUCT_MENU;
+                    return;
                 }
             }
         }
-    }
 
-    catch( const std::exception& ex )
-    {
-        pushNotif( ex.what() );
+        catch( const std::exception& ex )
+        {
+            pushNotif( ex.what() );
+        }
     }
 
     AppState::currentState = AppState::PRODUCT_MENU;

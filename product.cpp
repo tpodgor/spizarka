@@ -9,12 +9,12 @@ void CaloriesHistory::print()
 {
     std::cout << "\tSuma kalorii dla ostatnich 14 dni:\n\n";
 
-    std::cout << "\tDzisiaj: " << plan::kcalHistory.fortnite[ 0 ] << " kcal\n\n";
+    std::cout << "\tDzisiaj: " << fortnite[ 0 ] << " kcal\n\n";
 
     std::cout << "\tPoprzednie dni:\n";
     for( int day = 1; day < 14; ++day )
     {
-        std::cout << "\t         " << plan::kcalHistory.fortnite[ day ] << " kcal\n";
+        std::cout << "\t         " << fortnite[ day ] << " kcal\n";
     }
 }
 
@@ -85,6 +85,8 @@ void Product::consumeAmount( int amount )
 {
     if( !isInfinite() )
         _amountWithUnit.first -= amount;
+
+    plan::kcalHistory.addKcalToday( getKcal() * amount / 100 );
 }
 
 void Product::setKcal( int kcal )

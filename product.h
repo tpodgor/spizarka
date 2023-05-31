@@ -66,8 +66,6 @@ namespace product
 
     inline std::vector<std::string> infinite = { "woda", "sol" };
 
-    inline int kcalLastFortnite[ 14 ];
-
     inline int longestName = 0;
 }
 

@@ -53,7 +53,7 @@ void events_recipeView()
                     throw std::runtime_error( "Nie podano nazwy" );
                 }
 
-                auto recipe = findVectorMemberByKey<Recipe*>( recipe::base.recipes, name );
+                auto recipe = findMemberByName<Recipe*>( recipe::base.recipes, name );
 
                 if( recipe == recipe::base.recipes.end() )
                 {
@@ -145,7 +145,7 @@ void events_recipeEdit( Recipe* recipe )
                         throw std::runtime_error( "Nie zmieniono nazwy" );
                     }
 
-                    auto recipeName = findVectorMemberByKey<Recipe*>( recipe::base.recipes, newName );
+                    auto recipeName = findMemberByName<Recipe*>( recipe::base.recipes, newName );
                     if( recipeName != recipe::base.recipes.end() )
                     {
                         throw std::runtime_error( "Przepis o tej nazwie juz istnieje" );
@@ -203,7 +203,7 @@ void events_recipeDelete()
     recipe::base.printRecipes();
 
     std::string recipeName = getlineToString( "Podaj przepis do usuniecia: " );
-    auto recipe = findVectorMemberByKey<Recipe*>( recipe::base.recipes, recipeName );
+    auto recipe = findMemberByName<Recipe*>( recipe::base.recipes, recipeName );
 
     if( recipe != recipe::base.recipes.end() )
     {

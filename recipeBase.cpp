@@ -29,7 +29,7 @@ void RecipeBase::addRecipe()
         return;
     }
 
-    auto recipe = findVectorMemberByKey<Recipe*>( recipe::base.recipes, recipeName );
+    auto recipe = findMemberByName<Recipe*>( recipe::base.recipes, recipeName );
 
     if( recipe != recipe::base.recipes.end() )
     {
@@ -88,7 +88,7 @@ void RecipeBase::loadFromFile( std::string path )
         for( int seg = 2; seg < file[ line ].size(); seg += 3 ) // dla kazdego skladnika
         {
             // znajdŸ produkt w bazie
-            auto it = findVectorMemberByKey<Product*>( product::base.products, file[ line ][ seg ] );
+            auto it = findMemberByName<Product*>( product::base.products, file[ line ][ seg ] );
 
             newRecipe->addProduct(
                 *it, // produkt

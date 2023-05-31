@@ -127,7 +127,7 @@ bool Recipe::addProduct()
             }
         }
 
-        auto product = findVectorMemberByKey<Product*>( product::base.products, productName );
+        auto product = findMemberByName<Product*>( product::base.products, productName );
 
         if( product == product::base.products.end() )
         {
@@ -263,7 +263,7 @@ bool Recipe::canBeCooked( float servings )
         }
         pushNotif( "Przygotowales " + std::to_string( servings ).substr( 0, 4 ) + "x " + _name + "! Odliczono produkty" );
 
-        product::kcalLastFortnite[ 0 ] += totalKcal;
+        plan::kcalHistory.fortnite[ 0 ] += totalKcal;
         pushNotif( "Suma kalorii: " + std::to_string( totalKcal ) + " kcal" );
     }
 

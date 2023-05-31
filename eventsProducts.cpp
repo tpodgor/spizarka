@@ -52,7 +52,7 @@ void events_productConsume()
             throw std::runtime_error( "Nie podano nazwy" ); 
         }
 
-        auto product = findVectorMemberByKey<Product*>( product::base.products, name );
+        auto product = findMemberByName<Product*>( product::base.products, name );
 
         if( product == product::base.products.end() )
         {
@@ -87,7 +87,7 @@ void events_productConsume()
         pushNotif( "Odliczono" + convertAmountWithUnitToString( amountWithUnitToMacroUnit( AwU ) ) + " produktu" );
 
         // dolicz kalorie do historii
-        product::kcalLastFortnite[ 0 ] += ( *product )->getKcal() * AwU.first / 100;
+        plan::kcalHistory.fortnite[ 0 ] += ( *product )->getKcal() * AwU.first / 100;
     }
 
     catch( const std::exception& ex )
@@ -116,7 +116,7 @@ void events_productAdd()
         }
 
         // jesli juz jest w bazie
-        auto product = findVectorMemberByKey<Product*>( product::base.products, name );
+        auto product = findMemberByName<Product*>( product::base.products, name );
 
         if( product != product::base.products.end() )
         {
@@ -215,7 +215,7 @@ void events_productEdit()
     try {
         std::string name = cinToString( "Podaj nazwe produktu: " );
 
-        auto product = findVectorMemberByKey<Product*>( product::base.products, name );
+        auto product = findMemberByName<Product*>( product::base.products, name );
 
         if( product == product::base.products.end() )
         {
@@ -354,7 +354,7 @@ void events_productDelete()
 
     std::string name = cinToString( "Podaj nazwe produktu: " );
 
-    auto product = findVectorMemberByKey<Product*>( product::base.products, name );
+    auto product = findMemberByName<Product*>( product::base.products, name );
 
     if( product == product::base.products.end() )
     {

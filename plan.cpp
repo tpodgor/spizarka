@@ -54,11 +54,11 @@ void Plan::printKcalHistory()
 {
     std::cout << "\tSuma kalorii dla ostatnich 14 dni:\n\n";
 
-    std::cout << "\tWczesniej: " << product::kcalLastFortnite[ 0 ] << " kcal\n\n";
+    std::cout << "\tWczesniej: " << plan::kcalHistory.fortnite[ 0 ] << " kcal\n\n";
 
     for( int day = 1; day < 14; ++day )
     {
-    std::cout << "\t         " << product::kcalLastFortnite[ day ] << " kcal\n";
+    std::cout << "\t         " << plan::kcalHistory.fortnite[ day ] << " kcal\n";
     }
 }
 
@@ -79,7 +79,7 @@ void Plan::loadFromFile( std::string path )
             for( int seg = 0; seg < file[ line ].size(); seg += 2 )
             {
                 // sprawdza czy jest w recipe::base
-                auto it = findVectorMemberByKey<Recipe*>( recipe::base.recipes, file[ line ][ seg ] );
+                auto it = findMemberByName<Recipe*>( recipe::base.recipes, file[ line ][ seg ] );
 
                 // nie ma
                 if( it == recipe::base.recipes.end() )
@@ -97,7 +97,7 @@ void Plan::loadFromFile( std::string path )
     // historia
     for( int seg = 0; seg < file[ 8 ].size() ; ++seg )
     {
-        product::kcalLastFortnite[ seg ] = stoi( file[ 8 ][ seg ] );
+        plan::kcalHistory.fortnite[ seg ] = stoi( file[ 8 ][ seg ] );
     }
 
 
@@ -138,10 +138,10 @@ void Plan::loadFromFile( std::string path )
         // historia
         for( int day = 13; day >= 1; --day )
         {
-            product::kcalLastFortnite[ day ] = product::kcalLastFortnite[ day - 1 ];
+            plan::kcalHistory.fortnite[ day ] = plan::kcalHistory.fortnite[ day - 1 ];
         }
 
-        product::kcalLastFortnite[ 0 ] = 0;
+        plan::kcalHistory.fortnite[ 0 ] = 0;
     }
 }
 
@@ -176,7 +176,7 @@ void Plan::saveToFile( std::string path )
 
     for( int day = 0; day < 14; ++day )
     {
-        kcalHistory.push_back( std::to_string( product::kcalLastFortnite[ day ] ) );
+        kcalHistory.push_back( std::to_string( plan::kcalHistory.fortnite[ day ] ));
     }
 
     saveObjectInFile( kcalHistory, path );

@@ -85,7 +85,7 @@ void Day::addMeal()
     }
 
     // sprawdz czy przepis jest w bazie
-    auto it = findVectorMemberByKey<Recipe*>( recipe::base.recipes, recipeName );
+    auto it = findMemberByName<Recipe*>( recipe::base.recipes, recipeName );
     if( it == recipe::base.recipes.end() )
     {
         pushNotif( "Nie ma takiego przepisu w bazie. Najpierw dodaj przepis do bazy." );

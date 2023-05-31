@@ -75,7 +75,7 @@ std::string priceToString( int price );
 // zwraca
 // obiekt vectora MUSI miec metode getName() !!
 template<typename T>
-typename std::vector<T>::iterator findVectorMemberByKey( std::vector<T>& vector, std::string key )
+typename std::vector<T>::iterator findMemberByName( std::vector<T>& vector, std::string key )
 {
     auto it = find_if( vector.begin(), vector.end(), [ &key ]( T obj ) {
         return obj->getName() == key;

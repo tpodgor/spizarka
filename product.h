@@ -17,6 +17,11 @@ namespace productData
     };
 };
 
+struct CaloriesHistory
+{
+    int fortnite[ 14 ];
+};
+
 class Product
 {
 public:
@@ -64,6 +69,11 @@ namespace product
     inline int kcalLastFortnite[ 14 ];
 
     inline int longestName = 0;
+}
+
+namespace plan
+{
+    inline CaloriesHistory kcalHistory;
 }
 
 #endif

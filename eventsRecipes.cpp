@@ -118,6 +118,8 @@ void events_recipeAdd()
     refreshScreen();
     recipe::base.printRecipes();
 
+    recipe::base.addRecipe();
+
     AppState::currentState = AppState::RECIPE_MENU;
 }
 

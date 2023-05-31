@@ -38,6 +38,7 @@ void RecipeBase::addRecipe()
     }
 
     Recipe* newRecipe = new Recipe( recipeName );
+    recipe::base.recipes.push_back( newRecipe );
 
     // skladniki
     while( 1 )
@@ -67,8 +68,6 @@ void RecipeBase::addRecipe()
     newRecipe->printInfo();
     newRecipe->addDescription( getlineToString( "Podaj nowy opis: " ) );
 
-
-    recipe::base.recipes.push_back( newRecipe );
     pushNotif( "Utworzono przepis" );
 }
 

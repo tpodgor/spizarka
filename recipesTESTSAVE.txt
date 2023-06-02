@@ -1,4 +1,0 @@
-kurczak pieczony:to jeszcze wczoraj biegalo:kurczak:1500.000000:g:oliwa z oliwek:50.000000:ml:czosnek:8.000000:g:slodka papryka:3.000000:g
-nalesniki z serem:6 porcji:maka pszenna:200.000000:g:jajka:100.000000:g:mleko:400.000000:ml:cukier:5.000000:g:olej slonecznikowy:50.000000:ml:sol:2.000000:g:ser bialy:200.000000:g
-placki ziemniaczane::ziemniaki:800.000000:g:cebula:100.000000:g:jajka:100.000000:g:maka pszenna:60.000000:g:sol:5.000000:g:pieprz:1.000000:g:olej slonecznikowy:100.000000:ml
-spaghetti bolognese:mamma mia:makaron spaghetti:300.000000:g:wolowina:300.000000:g:cebula:100.000000:g:czosnek:8.000000:g:pomidory:500.000000:g:olej slonecznikowy:50.000000:ml

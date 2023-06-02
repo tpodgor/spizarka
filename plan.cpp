@@ -39,6 +39,10 @@ void Plan::printPlan()
 void Plan::cookMealToday()
 {
     days[ plan::today ].cookMeal();
+
+    product::base.saveToFile( "products.txt" );
+    plan::week.saveToFile( "plan.txt" );
+    plan::kcalHistory.saveToFile( "kcalHistory.txt" );
 }
 
 
@@ -46,6 +50,8 @@ void Plan::cookMealToday()
 void Plan::editPlanForDay( int day )
 {
     days[ day ].editInfo();
+
+    plan::week.saveToFile( "plan.txt" );
 }
 
 
@@ -80,13 +86,6 @@ void Plan::loadFromFile( std::string path )
         }
     }
 
-    // historia
-    for( int seg = 0; seg < file[ 8 ].size() ; ++seg )
-    {
-        plan::kcalHistory.fortnite[ seg ] = stoi( file[ 8 ][ seg ] );
-    }
-
-
     // TODO przesunac save'y o tyle dni
     int dayOffset = abs( daysUntilDate( { stoi( file[ 0 ][ 0 ] ), stoi( file[ 0 ][ 1 ] ) ,stoi( file[ 0 ][ 2 ] ) } ) );
 
@@ -120,14 +119,6 @@ void Plan::loadFromFile( std::string path )
                 day._meals.clear();
             }
         }
-
-        // historia
-        for( int day = 13; day >= 1; --day )
-        {
-            plan::kcalHistory.fortnite[ day ] = plan::kcalHistory.fortnite[ day - 1 ];
-        }
-
-        plan::kcalHistory.fortnite[ 0 ] = 0;
     }
 }
 
@@ -156,14 +147,4 @@ void Plan::saveToFile( std::string path )
 
         saveObjectInFile( meals, path );
     }
-
-    // historia
-    std::vector<std::string> kcalHistory;
-
-    for( int day = 0; day < 14; ++day )
-    {
-        kcalHistory.push_back( std::to_string( plan::kcalHistory.fortnite[ day ] ));
-    }
-
-    saveObjectInFile( kcalHistory, path );
 }

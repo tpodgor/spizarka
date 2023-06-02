@@ -24,6 +24,8 @@ public:
 
     void addKcalToday( int amount );
     void print();
+    void loadFromFile( std::string path );
+    void saveToFile( std::string path );
 };
 
 class Product
@@ -49,7 +51,7 @@ public:
     void setPrice( int price );
     void setFavorite( bool fav );
 
-    void deleteProduct();
+    void hideProduct();
     bool isHidden();
     bool isInfinite();
 

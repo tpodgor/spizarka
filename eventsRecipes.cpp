@@ -113,23 +113,11 @@ void events_recipeCook( Recipe* recipe )
 
 
 
-void events_recipeAdd()
-{
-    refreshScreen();
-    recipe::base.printRecipes();
-
-    recipe::base.addRecipe();
-
-    AppState::currentState = AppState::RECIPE_MENU;
-}
-
-
-
 void events_recipeEdit( Recipe* recipe )
 {
-    try {
-        while( 1 )
-        {
+    while( 1 )
+    {
+        try {
             refreshScreen();
             recipe->printInfo();
             drawRecipesEditMenu();
@@ -185,16 +173,29 @@ void events_recipeEdit( Recipe* recipe )
                 }
                 case 27:
                 {
+                    recipe::base.saveToFile( "recipes.txt" );
                     return;
                 }
             }
         }
-    }
 
-    catch( const std::exception& ex )
-    {
-        pushNotif( ex.what() );
+        catch( const std::exception& ex )
+        {
+            pushNotif( ex.what() );
+        }
     }
+}
+
+
+
+void events_recipeAdd()
+{
+    refreshScreen();
+    recipe::base.printRecipes();
+
+    recipe::base.addRecipe();
+
+    AppState::currentState = AppState::RECIPE_MENU;
 }
 
 
@@ -217,6 +218,8 @@ void events_recipeDelete()
     {
         pushNotif( "Nie ma takiego przepisu" );
     }
+
+    recipe::base.saveToFile( "recipes.txt" );
 
     AppState::currentState = AppState::RECIPE_MENU;
 }

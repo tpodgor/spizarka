@@ -69,6 +69,8 @@ void RecipeBase::addRecipe()
     newRecipe->addDescription( getlineToString( "Podaj nowy opis: " ) );
 
     pushNotif( "Utworzono przepis" );
+
+    recipe::base.saveToFile( "recipes.txt" );
 }
 
 

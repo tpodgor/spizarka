@@ -85,6 +85,9 @@ void events_productConsume()
         // odlicz ilosc produktu
         ( *product )->consumeAmount( AwU.first );
         pushNotif( "Odliczono" + convertAmountWithUnitToString( amountWithUnitToMacroUnit( AwU ) ) + " produktu" );     
+
+        product::base.saveToFile( "products.txt" );
+        plan::kcalHistory.saveToFile( "kcalHistory.txt" );
     }
 
     catch( const std::exception& ex )
@@ -112,9 +115,9 @@ void events_productAdd()
             throw std::runtime_error( "Nie podano nazwy" );
         }
 
-        // jesli juz jest w bazie
         auto product = findMemberByName<Product*>( product::base.products, name );
 
+        // jesli juz jest w bazie
         if( product != product::base.products.end() )
         {
             pushNotif( "Ten produkt juz jest w bazie" );
@@ -198,6 +201,8 @@ void events_productAdd()
     {
         pushNotif( ex.what() );
     }
+
+    product::base.saveToFile( "products.txt" );
 
     AppState::currentState = AppState::PRODUCT_MENU;
 }
@@ -328,6 +333,8 @@ void events_productEdit()
                 }
                 case 27:
                 {
+                    product::base.saveToFile( "products.txt" );
+
                     AppState::currentState = AppState::PRODUCT_MENU;
                     return;
                 }
@@ -360,8 +367,10 @@ void events_productDelete()
     }
     else
     {
-        ( *product )->deleteProduct();
+        ( *product )->hideProduct();
     }
+
+    product::base.saveToFile( "products.txt" );
 
     AppState::currentState = AppState::PRODUCT_MENU;
 }

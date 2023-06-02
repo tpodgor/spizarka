@@ -230,6 +230,7 @@ bool Recipe::canBeCooked( float servings )
             // porownuje ilosc wymagana i posiadana
             int balance = ingredient._productPtr->getAwU().first - static_cast<int>( ( ingredient._AwU.first * servings ) );
 
+            // jak za malo to pisze o ile
             if( balance < 0 )
             {
                 if( success )
@@ -238,13 +239,12 @@ bool Recipe::canBeCooked( float servings )
                     success = false;
                 }
 
-                // jak za malo to pisze o ile
                 pushNotif( convertAmountWithUnitToString( amountWithUnitToMacroUnit( { abs( balance ), ingredient._AwU.second } ) )
                     + " produktu: " + ingredient._productPtr->getName() );
             }
+            // jak ok to dodaje kalorie
             else
             {
-                // jak ok to dodaje kalorie
                 totalKcal += static_cast<int>( ingredient._productPtr->getKcal() * ingredient._AwU.first * servings / 100 );
             }
 
@@ -255,16 +255,19 @@ bool Recipe::canBeCooked( float servings )
         {
             throw std::runtime_error( "Mozesz przyrzadzic max " + std::to_string( maxServings ).substr( 0, 4 ) + " porcji" );
         }
-
-        // odlicza od ilosci produktow
-        for( auto& ingredient : _ingredients )
+        else
         {
-            ingredient._productPtr->consumeAmount( static_cast<int>( ingredient._AwU.first * servings ) );
-        }
-        pushNotif( "Przygotowales " + std::to_string( servings ).substr( 0, 4 ) + "x " + _name + "! Odliczono produkty" );
+            // odlicza od ilosci produktow
+            for( auto& ingredient : _ingredients )
+            {
+                ingredient._productPtr->consumeAmount( static_cast<int>( ingredient._AwU.first * servings ) );
+            }
+            pushNotif( "Przygotowales " + std::to_string( servings ).substr( 0, 4 ) + "x " + _name + "! Odliczono produkty" );
+            pushNotif( "Suma kalorii: " + std::to_string( totalKcal ) + " kcal" );
 
-        plan::kcalHistory.addKcalToday( totalKcal );
-        pushNotif( "Suma kalorii: " + std::to_string( totalKcal ) + " kcal" );
+            product::base.saveToFile( "products.txt" );
+            plan::kcalHistory.saveToFile( "kcalHistory.txt" );
+        }
     }
 
     catch( const std::exception& ex )

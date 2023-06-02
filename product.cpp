@@ -18,6 +18,51 @@ void CaloriesHistory::print()
     }
 }
 
+void CaloriesHistory::loadFromFile( std::string path )
+{
+    // zaladuj plik
+    std::vector<std::vector<std::string>> file = loadFromFileIntoVector( path );
+
+    for( int seg = 0; seg < file[ 1 ].size(); ++seg )
+    {
+        plan::kcalHistory.fortnite[ seg ] = stoi( file[ 1 ][ seg ] );
+    }
+
+    // TODO przesunac save'y o tyle dni
+    int dayOffset = abs( daysUntilDate( { stoi( file[ 0 ][ 0 ] ), stoi( file[ 0 ][ 1 ] ) ,stoi( file[ 0 ][ 2 ] ) } ) );
+
+    if( dayOffset )
+    {
+        for( int day = 13; day >= 1; --day )
+        {
+            plan::kcalHistory.fortnite[ day ] = plan::kcalHistory.fortnite[ day - 1 ];
+        }
+
+        plan::kcalHistory.fortnite[ 0 ] = 0;
+    }
+}
+
+void CaloriesHistory::saveToFile( std::string path )
+{
+    // usun dotychczasowe dane
+    std::ofstream outputFile{ path };
+    outputFile.close();
+
+    // zapisz date
+    std::vector<std::string> today = { std::to_string( getDate( 'd' ) ) ,std::to_string( getDate( 'm' ) ) ,std::to_string( getDate( 'y' ) ) };
+    saveObjectInFile( today, path );
+
+    // zapisz
+    std::vector<std::string> kcalHistory;
+
+    for( int day = 0; day < 14; ++day )
+    {
+        kcalHistory.push_back( std::to_string( plan::kcalHistory.fortnite[ day ] ) );
+    }
+
+    saveObjectInFile( kcalHistory, path );
+}
+
 
 
 Product::Product( std::string name, amount_with_unit AwU, int kcal, Date( date ), int price, bool fav ) :
@@ -132,7 +177,7 @@ bool Product::isInfinite()
     return false;
 }
 
-void Product::deleteProduct()
+void Product::hideProduct()
 {
     if( isInfinite() )
     {
